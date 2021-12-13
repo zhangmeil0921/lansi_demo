@@ -3,6 +3,7 @@ package demo.common.work.wexin;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,6 +16,7 @@ import java.util.List;
  * @version 1.0
  * @date 2021/12/2 2:31 下午
  */
+@Service
 public class FinanceDemo {
 
     @Value("spring.work.wexin.corpid")
@@ -27,7 +29,7 @@ public class FinanceDemo {
             + "..."
             + "-----END RSA PRIVATE KEY-----";
 
-    public static void demo() {
+    public void demo() {
         long sdk = Finance.NewSdk();
         // 初始化
         Finance.Init(sdk, corpid, secret);
@@ -49,7 +51,7 @@ public class FinanceDemo {
         for (int i = 0; i < chatdata.size(); i++) {
             JSONObject data = new JSONObject(chatdata.get(i).toString());
             String encryptRandomKey = data.getStr("encrypt_random_key");
-            String encryptChatMsg   = data.getStr("encrypt_chat_msg");
+            String encryptChatMsg = data.getStr("encrypt_chat_msg");
             long msg = Finance.NewSlice();
             try {
                 // 聊天记录密文解密
@@ -119,15 +121,24 @@ public class FinanceDemo {
             /* ============ 文件存储目录及文件名 Start ============ */
             String suffix = "";
             switch (msgtype) {
-                case "image" : suffix = ".jpg"; break;
-                case "voice" : suffix = ".amr"; break;
-                case "video" : suffix = ".mp4"; break;
-                case "emotion" :
-                    int type = (int) file.get("type");
-                    if (type == 1) {suffix = ".gif";}
-                    else if (type == 2) {suffix = ".png";}
+                case "image":
+                    suffix = ".jpg";
                     break;
-                case "file" :
+                case "voice":
+                    suffix = ".amr";
+                    break;
+                case "video":
+                    suffix = ".mp4";
+                    break;
+                case "emotion":
+                    int type = (int) file.get("type");
+                    if (type == 1) {
+                        suffix = ".gif";
+                    } else if (type == 2) {
+                        suffix = ".png";
+                    }
+                    break;
+                case "file":
                     suffix = "." + file.getStr("fileext");
                     break;
             }
@@ -136,12 +147,15 @@ public class FinanceDemo {
             String savefile = path + savefileName;
             File targetFile = new File(savefile);
             if (!targetFile.getParentFile().exists())
-                //创建父级文件路径
-            {targetFile.getParentFile().mkdirs();}
+            //创建父级文件路径
+            {
+                targetFile.getParentFile().mkdirs();
+            }
             /* ============ 文件存储目录及文件名 End ============ */
 
             /* ============ 拉去文件 Start ============ */
-            int i = 0; boolean isSave = true;
+            int i = 0;
+            boolean isSave = true;
             String indexbuf = "", sdkfileid = file.getStr("sdkfileid");
             while (true) {
                 long mediaData = Finance.NewMediaData();
@@ -188,7 +202,4 @@ public class FinanceDemo {
     }
 
 
-    public static void main(String[] args) {
-        demo();
-    }
 }
