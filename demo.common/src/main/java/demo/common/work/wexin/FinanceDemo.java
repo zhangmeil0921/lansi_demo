@@ -2,7 +2,6 @@ package demo.common.work.wexin;
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -19,15 +18,40 @@ import java.util.List;
 @Service
 public class FinanceDemo {
 
-    @Value("spring.work.wexin.corpid")
-    private static String corpid;
+//    @Value("spring.work.wexin.corpid")
+    private static String corpid = "wwd08coe7d775abaaa";
 
-    @Value("spring.work.wexin.contacts.corpsecret")
-    private static String secret;
+//    @Value("spring.work.wexin.contacts.corpsecret")
+    private static String secret = "zJ6k0naVVQ--gt9PUSSEvs03zW_nlDVmjAkPOTAfrew";
 
-    private static String priKey = "-----BEGIN RSA PRIVATE KEY-----\n"
-            + "..."
-            + "-----END RSA PRIVATE KEY-----";
+    private static String priKey =
+            "-----BEGIN RSA PRIVATE KEY-----\n" +
+                    "MIIEowIBAAKCAQEAjzJfnYgy8gI/UdR9OMzMh2/Svtz6ynPJdgqWX0qCm7361g04\n" +
+                    "Sz/g+aJGtqu8jRJNg3rxQhezoy5mc+//QDyL6sM0auASS+eWx2igxVahLhJEWef3\n" +
+                    "2woMrb+OHs6nJf2jBcfA494KvgkxSYXU84vl8UCHwUI839SLBSLWofb8ccFEmy9W\n" +
+                    "VSWY7EIUVV8pO8sLZ9uVWK1IrHHSrcGkx4SF913RDIxCTExj7bLqxNRklzWZgi3m\n" +
+                    "bYoIsTG6dmsGkmxagGPEtuVOI2UjpjQw1WyrN+6o+2+qpOIuoHKF5vGrPbQBL1jU\n" +
+                    "nshGs3MnwTWdxVOe+bw8a+VAqxpD5DlfdKamgQIDAQABAoIBAGNRbe3mPGeMVXyd\n" +
+                    "I6kUqrs5PPNyc2OdwVpk53z6QfJhZyu1iZjvmkuqWN9z59f0nNyXlePgapDAqwC4\n" +
+                    "sdJM7EKM17tU5HvPCc4O7ItSlYJN2yh8cnVy1+5ekOUfMeFwtPRaYpfpNowt9ghn\n" +
+                    "kZbGLlsRBddt6KjaUv3h9vnpQ5hlhU53slh+Zsdrsselpy0sTCF0ulVQgioZ6lzg\n" +
+                    "/Y61xCGxRWqq71UT/7EOZwIoD3NmLRZLE6vxm8uBrFvZZ5/jw9Z//8S+vgtRUgGj\n" +
+                    "/5v55ftTG+EOsaz2Zvt+jghkaEAchcyy5LyUv09Ir9eOYfjNAgeCk9dQv6E+2BiR\n" +
+                    "SvcUJEECgYEA5CvcoSpV66qC1T99/JqmqyTjORZ4ZKBJY9vos4uxNYfCbbhNJLDY\n" +
+                    "QAbCC234nBuKQ+3cVKkWtjBwfNp90mEmIoN6sYv+SdtVe2ofhJEqLMTiGyZPi2Iv\n" +
+                    "+vvRpFmiAUfWXqFzBy+3HSoTkRqbCytUIT7NXZZ3YwKbbIhyzABTzSkCgYEAoKlf\n" +
+                    "Gsn4rQEfmitAGJpuiSahih6KV3K+S9olnPbwd04YOw4u5UmouhyC7N0z2K8AO6zo\n" +
+                    "IkzCQtWQS1B1uaPE/stG7I/iy0CI6q46nSly5pajBBGQc+Y5ixRf23hEjGgca556\n" +
+                    "1pDyMs0Nb0J2AGDcr8olrbT1KwBvg8oWHOlA4ZkCgYAmC+pONXD+SwBl7qBjbqY8\n" +
+                    "A3qgGk8Y+GFEdXbn+XMjKfARu5mhdJuakYXpwfyiizUS/qaut0NCPfGD4Cr62Zgy\n" +
+                    "SRo8YMuWJSyr15ZJ1KrjrDDHtiutYkH959+dOBT7ga8NOH6lxB8Ujd+VYopX4nG0\n" +
+                    "2XQFFwHxUI36GwaJXcSbgQKBgEe4VERZNTHF9p2UASD6j62aGTLXP1qaVmj2ESRo\n" +
+                    "+B/KNPbn9fdVUoUChU/Hz4VDWg9JuLbXHUFIpQl5+ZPNj/tOM3MXKF8jh/t7m57d\n" +
+                    "CfX1+P+v95RFihqUFdabcb5cG5PPQ3bVbclP0FeCi7rPgrTWwMsypN91alKivAxb\n" +
+                    "9CLBAoGBALfb5SEupOoyIUetiWhOc1vlmP+71rJEXUEYwm0CMmfKZRW+I1A8qTE+\n" +
+                    "DVT6iUMVt6jj8L/YiMzjUh8y8HLcp4mlldzdfyjssZg6v2hABJcnID6o3DcTXA8k\n" +
+                    "8uMmaZZ0qY4oUzwgZa7bf/C//3mKlRUMoBYOT/LAksZlySIBXoST\n" +
+                    "-----END RSA PRIVATE KEY-----\n";
 
     public void demo() {
         long sdk = Finance.NewSdk();
