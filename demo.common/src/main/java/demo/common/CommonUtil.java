@@ -1,5 +1,6 @@
 package demo.common;
 
+import dao.MaterialSourceDao;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 
@@ -7,6 +8,7 @@ import net.sf.json.JSONObject;
 import demo.common.config.MyX509TrustManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import response.AccessTokenResult;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -102,19 +104,22 @@ public class CommonUtil {
      * @param count 返回素材的数量，取值在1到20之间
      * @return
      */
-    public static List<Material> getMaterial(String accessToken, String type, int offset, int count) {
-        List<Material> lists = new ArrayList<Material>();//定义图文素材实体类集合
-        String outputStr="";//定义一个空的参数字符串
-        String requestUrl = MATERIAL.replace("ACCESS_TOKEN", accessToken);//替换调access_token
-        MaterialParam para = new MaterialParam();//调用接口所需要的参数实体类
+    public static List<MaterialSourceDao> getMaterial(String accessToken, String type, int offset, int count) {
+        //定义图文素材实体类集合
+        List<MaterialSourceDao> lists = new ArrayList<MaterialSourceDao>();
+        //定义一个空的参数字符串
+        String outputStr="";
+        //替换调access_token
+        String requestUrl = MATERIAL.replace("ACCESS_TOKEN", accessToken);
+        //调用接口所需要的参数实体类
+        MaterialSourceDao para = new MaterialSourceDao();
         para.setType(type);
-        para.setOffset(offset);
-        para.setCount(count);
         JSONObject jsonObject = new JSONObject();
         jsonObject = JSONObject.fromObject(para);
-        outputStr = jsonObject.toString();//将参数对象转换成json字符串
-
-        jsonObject = httpsRequest(requestUrl, "POST", outputStr);  //发送https请求(请求的路径,方式,所携带的参数)
+        //将参数对象转换成json字符串
+        outputStr = jsonObject.toString();
+        //发送https请求(请求的路径,方式,所携带的参数)
+        jsonObject = httpsRequest(requestUrl, "POST", outputStr);
         // 如果请求成功
         if (null != jsonObject) {
             try {
@@ -127,7 +132,7 @@ public class CommonUtil {
                     JSONArray arr = json.getJSONArray("news_item");
                     json = (JSONObject) arr.get(0);
 
-                    Material material = new Material();
+                    MaterialSourceDao material = new MaterialSourceDao();
                     String title = json.getString("title");
                     String author = json.getString("author");
                     String digest = json.getString("digest");
@@ -138,10 +143,8 @@ public class CommonUtil {
                     material.setTitle(title);
                     material.setAuthor(author);
                     material.setDigest(digest);
-                    material.setThumb_media_id(thumb_media_id);
                     material.setUrl(url);
                     material.setContent(content);
-                    material.setShow_cover_pic(1);
                     lists.add(material);
                 }
             } catch (JSONException e) {
@@ -160,16 +163,16 @@ public class CommonUtil {
      * @param appsecret 密钥
      * @return
      */
-    public static Token getToken(String appid, String appsecret) {
-        Token token = null;
+    public static AccessTokenResult getToken(String appid, String appsecret) {
+        AccessTokenResult  token = null;
         String requestUrl = token_url.replace("APPID", appid).replace("APPSECRET", appsecret);//替换相应的参数
         // 发起GET请求获取凭证
         JSONObject jsonObject = httpsRequest(requestUrl, "GET", null);//发送https请求
         if (null != jsonObject) {
             try {
-                token = new Token();
-                token.setAccessToken(jsonObject.getString("access_token"));
-                token.setExpiresIn(jsonObject.getInt("expires_in"));
+                token = new AccessTokenResult();
+                token.setAccess_token(jsonObject.getString("access_token"));
+                token.setExpires_in(jsonObject.getInt("expires_in"));
             } catch (JSONException e) {
                 token = null;
                 // 获取token失败
