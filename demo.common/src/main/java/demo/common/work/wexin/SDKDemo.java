@@ -1,5 +1,7 @@
 package demo.common.work.wexin;
 
+import com.tencent.wework.Finance;
+
 import java.io.File;
 import java.io.FileOutputStream;
 

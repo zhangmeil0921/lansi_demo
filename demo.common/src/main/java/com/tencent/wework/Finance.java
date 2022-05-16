@@ -1,4 +1,4 @@
-package demo.common.work.wexin;
+package com.tencent.wework;
 
 /**
  * @author ZML

@@ -2,6 +2,7 @@ package demo.common.work.wexin;
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
+import com.tencent.wework.Finance;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
