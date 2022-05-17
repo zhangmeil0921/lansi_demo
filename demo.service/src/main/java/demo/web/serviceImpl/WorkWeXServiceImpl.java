@@ -119,6 +119,7 @@ public class WorkWeXServiceImpl implements WorkWeXService {
         try {
             response = token.execute();
         } catch (IOException e) {
+            logger.error("获取企业微信token报错---》{}",e.getMessage());
             e.printStackTrace();
         }
         AccessTokenResult result = response.body();
