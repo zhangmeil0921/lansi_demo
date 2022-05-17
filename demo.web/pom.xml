@@ -38,7 +38,7 @@
                 <filtering>true</filtering>
                 <includes>
                     <include>application.properties</include>
-                    <include>application-{profilesActive}.properties</include>
+                    <include>application-${profilesActive}.properties</include>
                 </includes>
             </resource>
         </resources>

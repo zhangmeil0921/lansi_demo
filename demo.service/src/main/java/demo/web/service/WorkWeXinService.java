@@ -20,7 +20,8 @@ public interface WorkWeXinService {
      * @param corpsecret    第三方用户唯一凭证密钥 AppSecret
      * @return
      */
-    @GET("cgi-bin/token")
+    @GET("cgi-bin/gettoken")
     Call<AccessTokenResult> getAccessToken(@Query("corpid") String corpid, @Query("corpsecret") String corpsecret);
+
 
 }

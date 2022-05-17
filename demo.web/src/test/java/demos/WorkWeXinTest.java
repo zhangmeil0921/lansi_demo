@@ -1,13 +1,16 @@
 package demos;
 
+import com.micro.service.driven.commons.json.gson.GsonBuilders;
 import demo.start.Application;
-import demo.web.serviceImpl.WorkWeXinTemplate;
+import demo.web.serviceImpl.WorkWeXServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import response.AccessTokenResult;
 
 /**
  * @author ZML
@@ -18,13 +21,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = Application.class)
 public class WorkWeXinTest {
 
-    private WorkWeXinTemplate workWeXinTemplate;
+    @Autowired
+    private WorkWeXServiceImpl workWeXService;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Test
     public void getToken(){
-        String token = workWeXinTemplate.getAccessToken();
-        logger.info("企业微信获取的token--->{}",token);
+        AccessTokenResult token = workWeXService.getToken();
+        logger.info("企业微信获取的token--->{}", GsonBuilders.create().toJson(token));
     }
 }

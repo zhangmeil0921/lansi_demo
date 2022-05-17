@@ -3,12 +3,20 @@ package demo.web.serviceImpl;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import com.micro.service.driven.wechat.mp.entity.request.MessageDecryptReq;
+import demo.common.RetrofitBuilder;
 import demo.web.service.WorkWeXService;
+import demo.web.service.WorkWeXinService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import request.WorkWexinEntranceReq;
+import response.AccessTokenResult;
+import retrofit2.Call;
+import retrofit2.Response;
+
+import java.io.IOException;
 
 /**
  * @author ZML
@@ -20,7 +28,13 @@ public class WorkWeXServiceImpl implements WorkWeXService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-//    private final WorkWeXinMpTemplate workWeXinMpTemplate;
+    private final WorkWeXinService workWeXinService = RetrofitBuilder.create().create(WorkWeXinService.class);
+
+    @Value("${spring.work.wexin.corpid}")
+    private String corpid;
+
+    @Value("${spring.work.wexin.contacts.corpsecret}")
+    private String corpsecret;
 
     @Override
     public void entrance(WorkWexinEntranceReq request) {
@@ -93,5 +107,21 @@ public class WorkWeXServiceImpl implements WorkWeXService {
             logger.error("同步文章到MySQL时失败!", e);
             return "fail";
         }
+    }
+
+    /**
+     * 获取企业微信对象token
+     * @return
+     */
+    public AccessTokenResult getToken(){
+        Call<AccessTokenResult> token = workWeXinService.getAccessToken(corpid, corpsecret);
+        Response<AccessTokenResult> response = null;
+        try {
+            response = token.execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        AccessTokenResult result = response.body();
+        return result;
     }
 }

@@ -150,6 +150,29 @@
         </dependency>
     </dependencies>
 
+   <profiles>
+       <profile>
+           <id>dev</id>
+           <properties>
+               <profilesActive>dev</profilesActive>
+           </properties>
+           <activation>
+               <activeByDefault>true</activeByDefault>
+           </activation>
+       </profile>
+<!--       <profile>-->
+<!--           <id>pre</id>-->
+<!--           <properties>-->
+<!--               <profilesActive>pre</profilesActive>-->
+<!--           </properties>-->
+<!--       </profile>-->
+<!--       <profile>-->
+<!--           <id>pro</id>-->
+<!--           <properties>-->
+<!--               <profilesActive>pro</profilesActive>-->
+<!--           </properties>-->
+<!--       </profile>-->
+   </profiles>
     <distributionManagement>
         <repository>
             <id>releases</id>
@@ -162,6 +185,5 @@
             <url>http://106.14.64.159/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
-
 
 </project>
