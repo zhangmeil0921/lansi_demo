@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <!--  引用资源配置文件  -->
+    <!--<properties resource="src/main/resources/application-dev.properties"/>-->
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="useMapperCommentGenerator" value="true"/>
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <!-- 配置后生成的 Mapper 接口都会自动继承接口 value: 需要继承的接口, 该接口不可以在 MapperScan 扫描范围中-->
+            <property name="mappers" value="demo.dao.mapper.BaseCommMapper"/>
+            <!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
+            <property name="caseSensitive" value="true"/>
+            <property name="forceAnnotation" value="true"/>
+        </plugin>
+        <!--集成lombok插件-->
+        <plugin type="com.lansi.common.plugs.mybatis.LombokPlugin">
+            <property name="hasLombok" value="true"/>
+        </plugin>
+        <commentGenerator>
+            <!-- suppressDate是去掉生成日期那行注释，suppressAllComments是去掉所有的注解 -->
+            <property name="suppressDate" value="true"/>
+            <!-- 在生成的实体类中附带表字段的注释  MBG1.3.3中新增的功能 -->
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+        <!-- 数据库连接属性: -->
+        <jdbcConnection
+                driverClass="com.mysql.jdbc.Driver"
+                connectionURL="jdbc:mysql://rm-uf6o289177ht773wc5m.mysql.rds.aliyuncs.com:3306/lansi_fdh"
+                userId="mysqlsa"
+                password="Lansi123"/>
+
+        <!-- MyBatis 生成器生成 Model -->
+        <javaModelGenerator targetPackage="demo.dao.mapper.pojo"
+                            targetProject="src/main/java">
+        </javaModelGenerator>
+
+
+        <!-- MyBatis 生成器生成 Mapper XML -->
+        <!--  <sqlMapGenerator targetPackage=""
+                           targetProject="">
+              <property name="enableSubPackages" value="false"/>
+          </sqlMapGenerator>-->
+
+        <!-- MyBatis 生成器生成 Mapper class -->
+        <javaClientGenerator targetPackage="demo.dao.mapper"
+                             targetProject="src/main/java"
+                             type="ANNOTATEDMAPPER"/>
+
+
+        <table tableName="u_estimated" domainObjectName="UEstimated"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="u_estimated_id" sqlStatement="JDBC" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>

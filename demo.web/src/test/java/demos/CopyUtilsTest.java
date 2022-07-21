@@ -1,12 +1,15 @@
 package demos;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.micro.service.driven.commons.json.gson.GsonBuilders;
-import demo.common.CopyUtils;
 import dao.MaterialNewsItem;
 import dao.NewsItem;
+import demo.common.CopyUtils;
+import demo.dao.mapper.UEstimatedMapper;
 import demo.start.Application;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -18,6 +21,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = Application.class)
 public class CopyUtilsTest {
 
+    @Autowired
+    private UEstimatedMapper uEstimatedMapper;
 
     @Test
     public void copyTest() throws IllegalAccessException, InstantiationException {
@@ -31,4 +36,9 @@ public class CopyUtilsTest {
     }
 
 
+    @Test
+    public void test(){
+        Integer integer = uEstimatedMapper.selectCount(new QueryWrapper());
+        System.out.println(integer);
+    }
 }
